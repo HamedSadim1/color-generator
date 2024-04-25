@@ -3,21 +3,30 @@ import Values from "values.js";
 import { IValues } from "./types";
 import SingleColor from "./components/SingleColor";
 
+/**
+ * The main component of the color generator application.
+ * Renders a form to input a color and displays a list of generated colors.
+ */
 function App() {
   const [color, setColor] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [list, setList] = useState<IValues[]>(new Values("#f15025").all(10));
 
+  /**
+   * Handles the form submission event.
+   *
+   * @param e - The form event object.
+   */
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!color) {
       return;
     }
     try {
-      let colors = new Values(color).all(10);
-      console.log(colors);
+      // ? This is a new instance of the Values class from the values.js library that takes a color as an argument and generates 10 shades of that color
+      const colors = new Values(color).all(10);
+      // ? This is a setter function that will update the list state with the new colors
       setList(colors);
-      console.log(list);
     } catch (error) {
       setError(true);
       console.log(error);
